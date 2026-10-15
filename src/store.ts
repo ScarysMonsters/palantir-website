@@ -5,19 +5,11 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import DocsSource from './data/DocsSource';
-import MainSource from './data/MainSource';
-import ProxySource from './data/ProxySource';
+import PalantirSource from './data/PalantirSource';
 import { Documentation, DocumentationCustomFile } from './interfaces/Documentation';
 import { fetchError } from './util/fetchError';
 import { SearchTerm, DocumentType, DocumentLink } from './util/search';
 import { splitName } from './util/splitName';
-import BuildersSource from '~/data/BuildersSource';
-import CollectionSource from '~/data/CollectionSource';
-// import CommandoSource from '~/data/CommandoSource';
-import RESTSource from '~/data/RESTSource';
-// import RPCSource from '~/data/RPCSource';
-import VoiceSource from '~/data/VoiceSource';
-import WSSource from '~/data/WSSource';
 
 export interface State {
 	sources: { source: DocsSource; name: string; id: string }[];
@@ -39,26 +31,16 @@ export const key: InjectionKey<Store<State>> = Symbol('docs');
 
 export const store = createStore<State>({
 	state: {
-		sources: [
-			{ source: MainSource, name: MainSource.name, id: MainSource.id },
-			{ source: BuildersSource, name: BuildersSource.name, id: BuildersSource.id },
-			{ source: CollectionSource, name: CollectionSource.name, id: CollectionSource.id },
-			{ source: ProxySource, name: ProxySource.name, id: ProxySource.id },
-			{ source: RESTSource, name: RESTSource.name, id: RESTSource.id },
-			{ source: VoiceSource, name: VoiceSource.name, id: VoiceSource.id },
-			{ source: WSSource, name: WSSource.name, id: WSSource.id },
-			// { source: CommandoSource, name: CommandoSource.name, id: CommandoSource.id },
-			// { source: RPCSource, name: RPCSource.name, id: RPCSource.id },
-		],
-		source: MainSource,
-		tag: MainSource.defaultTag,
+		sources: [{ source: PalantirSource, name: PalantirSource.name, id: PalantirSource.id }],
+		source: PalantirSource,
+		tag: PalantirSource.defaultTag,
 		docs: null,
 		branches: [],
 		file: null,
 		stats: {
-			downloads: `${(225_000_000).toLocaleString()}+`,
-			stars: `${(11_000).toLocaleString()}+`,
-			contributors: `${(100).toLocaleString()}+`,
+			downloads: '0+',
+			stars: '0+',
+			contributors: '0+',
 		},
 		searchIndex: [],
 		searchRef: [],
@@ -101,9 +83,9 @@ export const store = createStore<State>({
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const [fetchedDownloads, fetchedStars, fetchedContributors] = await Promise.all([
-				fetch('https://api.npmjs.org/downloads/range/2013-08-21:2100-08-21/discord.js').then(toJSON, noop),
-				fetch('https://api.github.com/repos/discordjs/discord.js').then(toJSON, noop),
-				fetch('https://api.github.com/repos/discordjs/discord.js/stats/contributors').then(toJSON, noop),
+				fetch('https://api.npmjs.org/downloads/range/2013-08-21:2100-08-21/hipalantir').then(toJSON, noop),
+				fetch('https://api.github.com/repos/ScarysMonsters/palantir.js').then(toJSON, noop),
+				fetch('https://api.github.com/repos/ScarysMonsters/palantir.js/stats/contributors').then(toJSON, noop),
 			]);
 
 			if (fetchedDownloads?.downloads) {

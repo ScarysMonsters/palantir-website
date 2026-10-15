@@ -18,18 +18,10 @@
 import { whenever, useEventListener, useMagicKeys } from '@vueuse/core';
 import { reactive, ref, computed, watchEffect, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import ProxySource from '../data/ProxySource';
 import BackToTop from '~/components/BackToTop.vue';
 import Sidebar from '~/components/Sidebar.vue';
 import Spinner from '~/components/Spinner.vue';
-import BuildersSource from '~/data/BuildersSource';
-import CollectionSource from '~/data/CollectionSource';
-// import CommandoSource from '~/data/CommandoSource';
-import MainSource from '~/data/MainSource';
-import RESTSource from '~/data/RESTSource';
-// import RPCSource from '~/data/RPCSource';
-import VoiceSource from '~/data/VoiceSource';
-import WSSource from '~/data/WSSource';
+import PalantirSource from '~/data/PalantirSource';
 import { useStore } from '~/store';
 import { fetchError } from '~/util/fetchError';
 
@@ -46,16 +38,8 @@ const { Ctrl_K, MetaLeft_K } = useMagicKeys({
 });
 
 const sources = reactive({
-	[MainSource.id]: MainSource,
-	main: MainSource,
-	[BuildersSource.id]: BuildersSource,
-	[CollectionSource.id]: CollectionSource,
-	[ProxySource.id]: ProxySource,
-	[RESTSource.id]: RESTSource,
-	[VoiceSource.id]: VoiceSource,
-	[WSSource.id]: WSSource,
-	// [CommandoSource.id]: CommandoSource,
-	// [RPCSource.id]: RPCSource,
+	[PalantirSource.id]: PalantirSource,
+	main: PalantirSource,
 });
 
 const showBackToTop = ref(false);
@@ -96,7 +80,7 @@ const watchRoute = async () => {
 			type: 'fetchDocs',
 			// @ts-expect-error
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			inputSource: sources[route.params.source] ?? MainSource,
+			inputSource: sources[route.params.source] ?? PalantirSource,
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			inputTag: route.params.tag ?? tag.value,
 		});
@@ -114,10 +98,10 @@ const watchRoute = async () => {
 		return router.replace({
 			name: 'docs-source-tag-category-file',
 			params: {
-				source: MainSource.id,
-				tag: MainSource.defaultTag,
-				category: MainSource.defaultFile.category,
-				file: MainSource.defaultFile.id,
+				source: PalantirSource.id,
+				tag: PalantirSource.defaultTag,
+				category: PalantirSource.defaultFile.category,
+				file: PalantirSource.defaultFile.id,
 			},
 		});
 	}
@@ -139,11 +123,11 @@ const watchRoute = async () => {
 		return router.replace({
 			name: 'docs-source-tag-category-file',
 			params: {
-				source: source.value?.id ?? MainSource.id,
+				source: source.value?.id ?? PalantirSource.id,
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				tag: source.value?.recentTag || source.value?.defaultTag,
-				category: source.value?.defaultFile.category ?? MainSource.defaultFile.category,
-				file: source.value?.defaultFile.id ?? MainSource.defaultFile.id,
+				category: source.value?.defaultFile.category ?? PalantirSource.defaultFile.category,
+				file: source.value?.defaultFile.id ?? PalantirSource.defaultFile.id,
 			},
 		});
 	}
@@ -159,10 +143,10 @@ const watchRoute = async () => {
 		return router.replace({
 			name: 'docs-source-tag-category-file',
 			params: {
-				source: source.value?.id ?? MainSource.id,
-				tag: tag.value ?? MainSource.defaultTag,
-				category: source.value?.defaultFile.category ?? MainSource.defaultFile.category,
-				file: source.value?.defaultFile.id ?? MainSource.defaultFile.id,
+				source: source.value?.id ?? PalantirSource.id,
+				tag: tag.value ?? PalantirSource.defaultTag,
+				category: source.value?.defaultFile.category ?? PalantirSource.defaultFile.category,
+				file: source.value?.defaultFile.id ?? PalantirSource.defaultFile.id,
 			},
 		});
 	}

@@ -53,11 +53,11 @@ import { computed } from 'vue';
 import InstallButton from '~/components/InstallButton.vue';
 import Logo from '~/components/Logo.vue';
 import Stats from '~/components/Stats.vue';
-import MainSource from '~/data/MainSource';
+import PalantirSource from '~/data/PalantirSource';
 import { useStore } from '~/store';
 
 useHead({
-	title: computed(() => 'discord.js'),
+	title: computed(() => 'palantir.js'),
 });
 
 const store = useStore();
@@ -65,6 +65,6 @@ const store = useStore();
 const docs = computed(() => store.state.docs);
 
 if (!docs.value) {
-	void store.dispatch('fetchDocs', { inputSource: MainSource });
+	void store.dispatch('fetchDocs', { inputSource: PalantirSource });
 }
 </script>
