@@ -4,7 +4,7 @@ const REPO = 'ScarysMonsters/palantir.js';
 
 class PalantirSource extends DocsSource {
 	public async fetchDocs(_tag?: string | null): Promise<any[]> {
-		const tags = await this.fetchTags();
+		const tags = await this.fetchTags().catch(() => ['main']);
 
 		const rawBase = `https://raw.githubusercontent.com/${REPO}/refs/heads/main`;
 
